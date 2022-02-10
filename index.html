@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css')}}">
+    <script type="text/javascript" src="static/js/main.js"></script>
+</head>
+<body>
+    <nav class="nav-container">
+                    <div class = "logo"> <a  href="/">MotionArt</a></div>
+                    <div class = "non-logo"> <a href="/">Home</a></div>
+                    <div class = "non-logo"> <a href="/feedback">Send Feedback</a></div>
+    </nav>
+    <div class="parent">
+        <div class="Camera-preview">
+            <div>
+                <p>Using your camera and the timer function, take a video or a picture of you dancing</p>
+            </div>
+            <div class="camera">
+                <video autoplay id="preview"> </video>
+            </div>
+        </div>
+    
+        <div class="timer">
+            <form id="timer-form">
+                <label for="timer-seconds">Take a picture or video after(in seconds)</label>
+                <input class="small" type="text" id="timer-seconds" name="timersec" value="60" max=600 >
+                <input class="submit" type="submit" value="Get dancing!">
+            </form>
+        </div>
+        
+        <div class="upload-video">
+            <button class="submit" type="upload-pic">Alternatively, by clicking here, you can upload a video of you dancing.</button>
+        </div>
+    </div>
+</body>
+</html>
