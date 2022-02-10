@@ -1,15 +1,23 @@
-(function () {
+function () {
     if (
       !"mediaDevices" in navigator ||
       !"getUserMedia" in navigator.mediaDevices
     ) {
       alert("Camera API is not available in your browser");
       return;
-    }
+}}
+
+recordafter() {
+  console.log('captured');
+}
   
-    // get page elements
-    const video = document.querySelector("#preview");
-    const danceform = document.getElementById("timer-form")
+// get page elements
+const video = document.getElementById("preview");
+const timerform = document.getElementById("timer-form");
+
+
+timerform.addEventListener('submit', recordafter());
+/*
     const devicesSelect = document.querySelector("#devicesSelect");
   
     // video constraints
@@ -90,3 +98,4 @@
   
     initializeCamera();
   })();
+  */
