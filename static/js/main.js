@@ -9,7 +9,7 @@
   
     // get page elements
     const video = document.querySelector("#preview");
-    const danceform = document.getElementById("#timer-form")
+    const danceform = document.getElementById("timer-form")
     const devicesSelect = document.querySelector("#devicesSelect");
   
     // video constraints
