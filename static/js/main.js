@@ -1,4 +1,5 @@
-function () {
+
+function some () {
     if (
       !"mediaDevices" in navigator ||
       !"getUserMedia" in navigator.mediaDevices
@@ -7,8 +8,8 @@ function () {
       return;
 }}
 
-recordafter() {
-  console.log('captured');
+function recordafter() {
+  preventDefault();
 }
   
 // get page elements
@@ -16,7 +17,11 @@ const video = document.getElementById("preview");
 const timerform = document.getElementById("timer-form");
 
 
-timerform.addEventListener('submit', recordafter());
+
+timerform.addEventListener('submit', recordafter(event){
+
+});
+
 /*
     const devicesSelect = document.querySelector("#devicesSelect");
   
