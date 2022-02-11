@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 :root {
     font-family: poppins, arial;
-    font-size: 12px;
+    font-size: 14px;
     color: #191a14;  
 }
 html { 
@@ -10,6 +10,10 @@ html {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+}
+
+p{
+    font-size: 2.9vw;
 }
 
 body {
