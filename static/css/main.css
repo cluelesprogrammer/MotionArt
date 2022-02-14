@@ -2,7 +2,7 @@
 
 :root {
     font-family: poppins, arial;
-    font-size: 14px;
+    font-size: 15px;
     color: #191a14;
 }
 html { 
@@ -15,7 +15,6 @@ html {
 
 body {
     margin:2em;
-    margin-top: 1em;
     line-height: 1.5;
     text-align: center;
     height: 90vh;
