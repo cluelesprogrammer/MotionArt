@@ -37,6 +37,9 @@ body {
     gap: 15px;
     font-size: 16px;
 }
+.Camera-preview{
+    height: 80%;
+}
 
 .nav-container > div > a{
     text-decoration: None;
@@ -49,9 +52,6 @@ body {
     color: #b63232;
     font-size: 23px;
     font-weight: 400;
-}
-#preview {
-    height: 80vh;
 }
 /*
 
