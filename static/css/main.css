@@ -21,6 +21,7 @@ body {
 }
 
 .cam-instruction  p {
+    font-size: 13px;
     text-align: left;
 }
 .timer {
