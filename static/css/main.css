@@ -50,7 +50,9 @@ body {
     font-size: 23px;
     font-weight: 400;
 }
-
+#preview {
+    height: 80vh;
+}
 /*
 
 */
@@ -81,6 +83,7 @@ div.timer input.small{
     background: rgb(150, 162, 177);
     border-radius:20% 20% 20% 20% / 70px;
     padding: 1px;
+    font-size: 14px;
 }
 
 #timer-button {
