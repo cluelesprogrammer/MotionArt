@@ -9,4 +9,4 @@ navigator.mediaDevices.getUserMedia(constraints)
   };
 })
 .catch(function(err) { console.log(err.name + ": " + err.message); }); 
-alert('vh used')
+alert('view units changed again')
