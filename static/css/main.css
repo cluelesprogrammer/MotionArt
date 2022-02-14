@@ -38,6 +38,10 @@ body {
     font-size: 16px;
 }
 
+.small, .upload-video {
+    width: 10px;
+}
+
 .nav-container > div > a{
     text-decoration: None;
 }
