@@ -2,7 +2,7 @@
 
 :root {
     font-family: poppins, arial;
-    font-size: 16px;
+    font-size: 14px;
     color: #191a14;
 }
 html { 
@@ -21,8 +21,9 @@ body {
 }
 
 .cam-instruction  p {
-    font-size: 13px;
-    text-align: left;
+    font-size: 14px;
+    text-align: center;
+    
 }
 .timer {
     display: inline;
@@ -34,6 +35,7 @@ body {
     align-items: center;
     justify-content: flex-end;
     gap: 15px;
+    font-size: 17px;
 }
 
 .nav-container > div > a{
@@ -50,7 +52,6 @@ body {
 }
 
 /*
-
 
 */
 .timer {
