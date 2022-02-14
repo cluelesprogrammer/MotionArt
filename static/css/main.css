@@ -20,6 +20,9 @@ body {
     height: 90vh;
 }
 
+.cam-instruction  p {
+    text-align: left;
+}
 .timer {
     display: inline;
 }
