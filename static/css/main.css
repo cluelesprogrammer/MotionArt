@@ -87,9 +87,30 @@ body {
 }
 
 #preview {
+    position: relative;
     width: 100%;
     height: 100%;
 }
+
+.camera {
+    position: relative;
+}
+
+.camera video {
+    position: relative;
+    z-index: 0;
+}
+
+#recording-text {
+    position: absolute;
+    top: 50%;
+    left: 40%;
+    z.index: 1;
+    background-color: grey;
+    color: white;
+    
+}
+
 
 .div-button{
     margin-top: 2em;
