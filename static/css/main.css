@@ -38,7 +38,6 @@ body {
     font-size: 16px;
 }
 
-
 .nav-container > div > a{
     text-decoration: None;
 }
@@ -54,16 +53,13 @@ body {
 /*
 
 */
-
 .timer-form {
-    display: inline;
+    display: flex;
 }
 
-.timer:nth-of-type(1) {
-    flex: 3;
+.small-field{
+    width: 10%;
 }
-
-
 
 
 .submit, #bigger-button{ 
