@@ -1,4 +1,4 @@
-var constraints = {video: {width: 350, height: 900}};
+var constraints = {video: true};
 
 navigator.mediaDevices.getUserMedia(constraints)
 .then(function(mediaStream) {
@@ -9,4 +9,3 @@ navigator.mediaDevices.getUserMedia(constraints)
   };
 })
 .catch(function(err) { console.log(err.name + ": " + err.message); }); 
-alert('view units changed again')
