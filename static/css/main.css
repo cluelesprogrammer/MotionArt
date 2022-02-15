@@ -55,6 +55,18 @@ body {
 */
 .timer-form {
     display: flex;
+    justify-items: space-evenly;
+    align-items: center;
+    padding: 0 1%;
+}
+
+.timer-form > * {
+    flex: 3; 
+    margin: 0 1%;
+}
+
+.timer-form > .small-field {
+    flex: 1;
 }
 
 .small-field{
@@ -77,6 +89,7 @@ body {
     height: 100%;
 }
 
+/*
 .div-button{
     margin-top: 2em;
     border: 2px solid white;
@@ -86,6 +99,7 @@ body {
     font-size: 14px;
     text-align: center;
 }
+*/
 #timer-button {
     border-radius:40% 40% 40% 40% / 40px;
     padding: 4px;
