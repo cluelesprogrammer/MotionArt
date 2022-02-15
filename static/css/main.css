@@ -59,6 +59,8 @@ body {
 
 .small-field{
     width: 10%;
+    align-self: center;
+    height: 50%;
 }
 
 
@@ -90,7 +92,7 @@ body {
     text-align: center;
 }
 
-.div-button
+
 
 
 
