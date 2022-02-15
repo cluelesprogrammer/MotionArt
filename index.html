@@ -22,15 +22,19 @@
                 <div id="preview-with-text">
                     <video autoplay id="preview"></video>
                 </div>
-                 <div id= "recording-text">  </div>
+                 <div id= "countdown-text">  </div>
             </div>
         </div>
 
      
     <form class="timer-form" id="timer-form">
-        <label for="timer-seconds"><p>Record a video after(in seconds)</p></label>
-        <input class="small-field" type="number" id="timer-seconds" name="timersec" value="60" max=600 >
-        <input id="timer-button"  type="submit" value="Get dancing!">
+        <label for="timer-seconds"><p>Record a video after</p></label>
+        <input class="small-field" type="number" id="timer-seconds" name="timersec" value="60" max=600>
+        <div class="time-unit">secs</div>
+        <label for="record-duration"><p>Record for</p></label>
+        <input class="small-field" type="number" id="record-duration" name="record-secs" value="120" max=600 >
+        <div class="time-unit">secs</div>
+        <button id="timer-button"  type="submit"> Get dancing </button>
     </form>            
         
     <div class="div-button" id="upload-video">

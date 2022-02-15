@@ -75,7 +75,7 @@ body {
     height: 50%;
 }
 
-.timer-form > label > p {
+.timer-form  {
     font-size: 13px;
 }
 .submit, #bigger-button{ 
@@ -105,12 +105,14 @@ body {
     position: absolute;
     top: 50%;
     left: 40%;
-    z.index: 1;
-    background-color: grey;
+    z-index: 1;
+    background-color: violet;
     color: white;
     
 }
-
+ .time-unit {
+     margin-left: auto;
+ }
 
 .div-button{
     margin-top: 2em;
