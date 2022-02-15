@@ -37,9 +37,7 @@ body {
     gap: 15px;
     font-size: 16px;
 }
-.Camera-preview{
-    height: 80%;
-}
+
 
 .nav-container > div > a{
     text-decoration: None;
@@ -56,13 +54,17 @@ body {
 /*
 
 */
-.timer {
-    justify-content: center;
+
+.timer-form {
+    display: inline;
 }
 
-div.timer input.small{
-    width: 2em;
+.timer:nth-of-type(1) {
+    flex: 3;
 }
+
+
+
 
 .submit, #bigger-button{ 
     background-color: #97b42d; border-radius: 8px; border-width: 0; color: #333333; cursor: pointer; display: inline-block; font-weight: 500; line-height: 20px; list-style: none; margin: 0; padding: 5px 6px; text-align: center; transition: all 200ms; vertical-align: baseline; white-space: nowrap; user-select: none; -webkit-user-select: none; touch-action: manipulation; 
@@ -84,12 +86,16 @@ div.timer input.small{
     border-radius:20% 20% 20% 20% / 70px;
     padding: 1px;
     font-size: 14px;
+    text-align: center;
 }
-
 #timer-button {
     border-radius:40% 40% 40% 40% / 40px;
     padding: 4px;
+    text-align: center;
 }
+
+.div-button
+
 
 
 
