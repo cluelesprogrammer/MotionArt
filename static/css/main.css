@@ -75,7 +75,9 @@ body {
     height: 50%;
 }
 
-
+.timer-form > label > p {
+    font-size: 13px;
+}
 .submit, #bigger-button{ 
     background-color: #97b42d; border-radius: 8px; border-width: 0; color: #333333; cursor: pointer; display: inline-block; font-weight: 500; line-height: 20px; list-style: none; margin: 0; padding: 5px 6px; text-align: center; transition: all 200ms; vertical-align: baseline; white-space: nowrap; user-select: none; -webkit-user-select: none; touch-action: manipulation; 
 }
@@ -89,7 +91,6 @@ body {
     height: 100%;
 }
 
-/*
 .div-button{
     margin-top: 2em;
     border: 2px solid white;
@@ -99,11 +100,12 @@ body {
     font-size: 14px;
     text-align: center;
 }
-*/
 #timer-button {
-    border-radius:40% 40% 40% 40% / 40px;
+    border-radius:40% 40% 40% 40% / 50px;
     padding: 4px;
     text-align: center;
+    border: 2px solid white;
+    background: rgb(150, 162, 177);
 }
 
 
