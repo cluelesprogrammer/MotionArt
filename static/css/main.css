@@ -62,7 +62,7 @@ body {
 
 .timer-form > * {
     flex: 3; 
-    margin: 0 1%;
+    
 }
 
 .timer-form > .small-field {
@@ -70,7 +70,7 @@ body {
 }
 
 .small-field{
-    width: 10%;
+    width: 40%;
     align-self: center;
     height: 50%;
 }
@@ -78,8 +78,8 @@ body {
 .timer-form  {
     font-size: 13px;
 }
-.submit, #bigger-button{ 
-    background-color: #97b42d; border-radius: 8px; border-width: 0; color: #333333; cursor: pointer; display: inline-block; font-weight: 500; line-height: 20px; list-style: none; margin: 0; padding: 5px 6px; text-align: center; transition: all 200ms; vertical-align: baseline; white-space: nowrap; user-select: none; -webkit-user-select: none; touch-action: manipulation; 
+#upload-video{ 
+    background-image: linear-gradient(to right, #cbd813 0%, #4316e6 51%, #360fe4 100%); border-radius: 8px; border-width: 0; color: white; cursor: pointer; display: inline-block; font-weight: 500; line-height: 20px; list-style: none; margin: 0; padding: 5px 6px; text-align: center; transition: all 200ms; vertical-align: baseline; white-space: nowrap; user-select: none; -webkit-user-select: none; touch-action: manipulation; 
 }
 
 #bigger-button {
@@ -123,14 +123,49 @@ body {
     font-size: 14px;
     text-align: center;
 }
-#timer-button {
+
+/*
+#rec-button {
     border-radius:40% 40% 40% 40% / 50px;
     padding: 4px;
     text-align: center;
     border: 2px solid white;
     background: rgb(150, 162, 177);
 }
+*/
+#rec-button {
+	width: 35px;
+	height: 35px;
+	font-size: 0;
+	background-color: red;
+	border: 0;
+	border-radius: 35px;
+	margin: 18px;
+	outline: none;
+}
 
+.notRec{
+	background-color: darkred;
+}
+
+.Rec{
+	animation-name: pulse;
+	animation-duration: 1.5s;
+	animation-iteration-count: infinite;
+	animation-timing-function: linear;
+}
+
+@keyframes pulse{
+	0%{
+		box-shadow: 0px 0px 5px 0px rgba(173,0,0,.3);
+	}
+	65%{
+		box-shadow: 0px 0px 5px 13px rgba(173,0,0,.3);
+	}
+	90%{
+		box-shadow: 0px 0px 5px 13px rgba(173,0,0,0);
+	}
+}
 
 
 
