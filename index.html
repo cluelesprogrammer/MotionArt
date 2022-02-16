@@ -16,32 +16,37 @@
     <div class="parent">
         <div class="Camera-preview">
             <div class="cam-instruction">
-                <p>Using your camera and the timer function, take a video you dancing!</p>
+                <p>Set a timer and duration for your dance video!</p>
             </div>
             <div class="camera">
                 <div id="preview-with-text">
                     <video autoplay id="preview"></video>
                 </div>
                  <div id= "countdown-text">  </div>
-            </div>
         </div>
-
-     
+    </div>
+ 
     <form class="timer-form" id="timer-form">
         <label for="timer-seconds"><p>Record a video after</p></label>
         <input class="small-field" type="number" id="timer-seconds" name="timersec" value="60" max=600>
-        <div class="time-unit">secs</div>
+        <label for="time-unit" class="time-unit">secs</label>
+        <select id="time-unit" name="time-unit">
+            <option value="secs">secs</option>
+            <option value="mins">mins</option>
+        </select>
         <label for="record-duration"><p>Record for</p></label>
         <input class="small-field" type="number" id="record-duration" name="record-secs" value="120" max=600 >
-        <div class="time-unit">secs</div>
-        <button id="timer-button"  type="submit"> Get dancing </button>
+        <label for="time-unit" class="time-unit">secs</label>
+        <select id="time-unit" name="time-unit">
+            <option value="secs">secs</option>
+            <option value="mins">mins</option>
+        </select>
+        <button id="rec-button"  type="submit"> Rec </button>
     </form>            
         
     <div class="div-button" id="upload-video">
-            Alternatively, by clicking here, you can upload a video of you dancing.
+        Alternatively, by clicking here, you can upload a video of you dancing.
     </div>
-
-    
     <script type="text/javascript" src="static/js/main.js"></script>
 </body>
 </html>
