@@ -1,5 +1,6 @@
 const constraints = {video: true};
 
+
 if (navigator.mediaDevices === undefined) {
   navigator.mediaDevices = {};
 }
@@ -25,6 +26,8 @@ if (navigator.mediaDevices.getUserMedia === undefined) {
     });
   }
 }
+
+alert('Erik, you motherfucker');
 
 navigator.mediaDevices.getUserMedia({ video: true })
 .then(function(stream) {
