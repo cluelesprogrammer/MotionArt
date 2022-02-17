@@ -1,4 +1,4 @@
-const constraints = {video: true};
+const constraints = {video: true, facingMode: 'user'};
 
 
 if (navigator.mediaDevices === undefined) {
@@ -27,7 +27,6 @@ if (navigator.mediaDevices.getUserMedia === undefined) {
   }
 }
 
-alert('Erik, you motherfucker');
 
 navigator.mediaDevices.getUserMedia({ video: true })
 .then(function(stream) {
