@@ -1,5 +1,5 @@
 const constraints = {video: {}};
-
+alert('this is getting ridiculous')
 
 if (navigator.mediaDevices === undefined) {
   navigator.mediaDevices = {};
