@@ -1,4 +1,4 @@
-const constraints = {video: true, facingMode: 'user'};
+const constraints = {video: {}};
 
 
 if (navigator.mediaDevices === undefined) {
