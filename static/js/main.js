@@ -19,6 +19,7 @@ if (navigator.mediaDevices.getUserMedia === undefined) {
     if (!getUserMedia) {
       return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
     }
+    
 
     // Otherwise, wrap the call to the old navigator.getUserMedia with a Promise
     return new Promise(function(resolve, reject) {
