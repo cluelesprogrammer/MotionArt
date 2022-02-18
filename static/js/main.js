@@ -1,4 +1,4 @@
-const constraints = {video: true};
+const constraints = {video: {}};
 
 
 if (navigator.mediaDevices === undefined) {
@@ -28,11 +28,11 @@ if (navigator.mediaDevices.getUserMedia === undefined) {
   }
 }
 
-alert('Erik, you motherfucker');
-
 navigator.mediaDevices.getUserMedia({ video: true })
 .then(function(stream) {
   var video = document.querySelector('video');
+
+ 
   // Older browsers may not have srcObject
   if ("srcObject" in video) {
     video.srcObject = stream;

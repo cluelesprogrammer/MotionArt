@@ -136,7 +136,7 @@ body {
 #rec-button {
 	width: 35px;
 	height: 35px;
-	font-size: 0;
+	font-size: 12px;
 	background-color: red;
 	border: 0;
 	border-radius: 35px;
