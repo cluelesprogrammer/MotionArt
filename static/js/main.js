@@ -1,4 +1,4 @@
-const constraints = {video: {}};
+const constraints = {video: {}, audio: false};
 
 
 if (navigator.mediaDevices === undefined) {
