@@ -27,10 +27,13 @@ if (navigator.mediaDevices.getUserMedia === undefined) {
   }
 }
 
-
 navigator.mediaDevices.getUserMedia({ video: true })
 .then(function(stream) {
   var video = document.querySelector('video');
+
+  video.setAttribute('autoplay', '');
+  video.setAttribute('muted', '');
+  video.setAttribute('playsinline', '');
   // Older browsers may not have srcObject
   if ("srcObject" in video) {
     video.srcObject = stream;
