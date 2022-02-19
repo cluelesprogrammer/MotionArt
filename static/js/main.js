@@ -1,5 +1,5 @@
-const constraints = {video: {}};
-console.log('this');
+const constraints = {video: true};
+console.log('fonts change');
 
 if (navigator.mediaDevices === undefined) {
   navigator.mediaDevices = {};
@@ -28,7 +28,7 @@ if (navigator.mediaDevices.getUserMedia === undefined) {
   }
 }
 
-navigator.mediaDevices.getUserMedia({ video: true })
+navigator.mediaDevices.getUserMedia(constraints)
 .then(function(stream) {
   var video = document.querySelector('video');
 
