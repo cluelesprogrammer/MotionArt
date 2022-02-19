@@ -5,6 +5,9 @@
     font-size: 15px;
     color: #191a14;
 }
+* {
+    -webkit-text-size-adjust: none;
+}
 html { 
     background: url('../images/background/background1.png') no-repeat center center fixed; 
     -webkit-background-size: cover;
