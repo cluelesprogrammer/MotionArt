@@ -1,7 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
-:root {
+/*
+
     font-family: poppins;
+*/
+
+:root {
     font-size: 15px;
     color: #191a14;
 }
@@ -17,7 +21,7 @@ body {
     margin:3em;
     line-height: 1.5;
     text-align: center;
-    height: 90vh;
+    height: 100vh;
 }
 
 .cam-instruction  p {
