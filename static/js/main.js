@@ -1,5 +1,5 @@
 const constraints = {video: true};
-console.log('fonts change');
+
 
 if (navigator.mediaDevices === undefined) {
   navigator.mediaDevices = {};
