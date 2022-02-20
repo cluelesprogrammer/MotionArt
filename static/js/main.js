@@ -8,42 +8,54 @@ if (navigator.mediaDevices === undefined) {
 // with getUserMedia as it would overwrite existing properties.
 // Here, we will just add the getUserMedia property if it's missing.
 if (navigator.mediaDevices.getUserMedia === undefined) {
+
+  alert('navigator.mediaDevices.getUserMedia === undefined');
   navigator.mediaDevices.getUserMedia = function(constraints) {
+    alert('navigator.mediaDevices.getUserMedia === undefined');
 
     // First get ahold of the legacy getUserMedia, if present
     var getUserMedia = navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+    alert(getUserMedia);
 
     // Some browsers just don't implement it - return a rejected promise with an error
     // to keep a consistent interface
     if (!getUserMedia) {
+      alert("promise reject");
       return Promise.reject(new Error('getUserMedia is not implemented in this browser'));
     }
     
 
     // Otherwise, wrap the call to the old navigator.getUserMedia with a Promise
     return new Promise(function(resolve, reject) {
+      alert("promise return");
       getUserMedia.call(navigator, constraints, resolve, reject);
     });
   }
 }
+alert('Sup Mardy Bum')
 
 navigator.mediaDevices.getUserMedia(constraints)
 .then(function(stream) {
+  alert('stream');
   var video = document.querySelector('video');
 
  
   // Older browsers may not have srcObject
   if ("srcObject" in video) {
     video.srcObject = stream;
+    alert('srcObject');
   } else {
     // Avoid using this in new browsers, as it is going away.
+    alert('else srcObject')
     video.src = window.URL.createObjectURL(stream);
   }
+  alert('else srcObject')
   video.onloadedmetadata = function(e) {
     video.play();
   };
 })
 .catch(function(err) {
+  alert('catch error');
   console.log(err.name + ": " + err.message);
 });
 
