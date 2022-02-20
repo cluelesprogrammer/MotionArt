@@ -60,21 +60,17 @@ body {
 .timer-form {
     display: flex;
     justify-items: space-evenly;
-    align-items: center;
-    padding: 0 1%;
+    align-items: center;   
 }
+
 
 .timer-form > * {
-    flex: 3; 
-    
+    flex: 4; 
 }
 
-.timer-form > .small-field {
-    flex: 1;
-}
 
-.small-field{
-    width: 40%;
+.num-field{
+    width: 50%;
     align-self: center;
     height: 50%;
 }
@@ -82,6 +78,7 @@ body {
 .timer-form  {
     font-size: 13px;
 }
+
 #upload-button{ 
     background-image: linear-gradient(to right, #cbd813 0%, #4316e6 51%, #360fe4 100%); border-radius: 8px; border-width: 0; color: white; cursor: pointer; display: inline-block; font-weight: 500; line-height: 20px; list-style: none; margin: 0; padding: 5px 6px; text-align: center; transition: all 200ms; vertical-align: baseline; white-space: nowrap; user-select: none; -webkit-user-select: none; touch-action: manipulation; 
 }
@@ -115,8 +112,12 @@ body {
     
 }
  .time-unit {
-     margin-left: auto;
- }
+    position: absolute;
+    top: -7000px;
+    left: -7000px;
+}
+
+
 
 .div-button{
     margin-top: 2em;

@@ -1,6 +1,5 @@
 const constraints = {video: true};
 
-
 if (navigator.mediaDevices === undefined) {
   navigator.mediaDevices = {};
 }
