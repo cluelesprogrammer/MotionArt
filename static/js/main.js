@@ -38,8 +38,6 @@ navigator.mediaDevices.getUserMedia(constraints)
 .then(function(stream) {
   alert('stream');
   var video = document.querySelector('video');
-
- 
   // Older browsers may not have srcObject
   if ("srcObject" in video) {
     video.srcObject = stream;
@@ -49,7 +47,7 @@ navigator.mediaDevices.getUserMedia(constraints)
     alert('else srcObject')
     video.src = window.URL.createObjectURL(stream);
   }
-  alert('else srcObject')
+  
   video.onloadedmetadata = function(e) {
     video.play();
   };
