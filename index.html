@@ -28,12 +28,8 @@
  
     <form class="timer-form" id="timer-form">
         <label for="timer-seconds" class="timer-label"><p>Timer</p></label>
-        <input class="num-field" type="number" id="timer-seconds" name="timersec" value="60" max=600>
-        <label for="time-unit" class="time-unit">secs</label>
-        <select id="time-unit" name="time-unit">
-            <option value="secs">secs</option>
-            <option value="mins">mins</option>
-        </select>
+        <input class="num-field" placeholder="in seconds" type="number" id="timer-seconds" name="timersec" value="60" max=600>
+        <p>secs</p>
         <label for="record-duration" class="timer-label"><p>Duration</p></label>
         <input class="num-field" type="number" id="record-duration" name="record-secs" value="120" max=600 >
         <label for="time-unit" class="time-unit">secs</label>
@@ -41,9 +37,10 @@
             <option value="secs">secs</option>
             <option value="mins">mins</option>
         </select>
-        <button id="rec-button"  type="submit"> Record </button>
-    </form>            
-        
+        <button id="rec-button"  type="submit"> rec </button>
+    </form>           
+
+    <input type="file" id="fileElem" style="display:none" accept="video/*">
     <div class="div-button" id="upload-video">
         Alternatively, by clicking here, you can upload a video of you dancing.
     </div>
