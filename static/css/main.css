@@ -2,19 +2,20 @@
 
 
 :root {
-    font-size: 15px;
+    --starndard-font-size: 15vw; 
     font-family: poppins;
     color: #191a14;
 }
-* {
-    -webkit-text-size-adjust: none;
-}
+
 html { 
     background: url('../images/background/background1.png') no-repeat center center fixed; 
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    
+    font-size: clamp(7px, var(--starndard-font-size), 18px);
+    
 }
 
 body {
@@ -31,6 +32,11 @@ body {
 }
 .timer {
     display: inline;
+}
+
+label > p::after {
+    content : '';
+    width: 1em;
 }
 
 .nav-container{

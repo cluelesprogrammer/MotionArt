@@ -56,9 +56,8 @@ function paddedFormat(x){
   return x;
 }
   
-  
 var timerbutton = document.getElementById("timer-button");
-const uploadbutton = document.getElementById("upload-video");
+let uploadbutton = document.getElementById("upload-video");
 var form = document.getElementById('timer-form')
 
 form.addEventListener("submit", function(e) {
@@ -76,3 +75,18 @@ form.addEventListener("submit", function(e) {
       if (timersecs < 0) { clearInterval(countInterval) };
   }, 1000);
 })
+
+const fileSelect = document.getElementById("upload-video"),
+fileElem = document.getElementById("fileElem");
+
+fileSelect.addEventListener("click", function (e) {
+  if (fileElem) {
+    fileElem.click();
+  }
+}, false);
+
+fileElem.addEventListener("change", handleFiles, false);
+function handleFiles() {
+  const fileList = this.files; /* now you can work with the file list */
+  vid = fileList[0]
+}
