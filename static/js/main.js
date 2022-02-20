@@ -33,7 +33,6 @@ if (navigator.mediaDevices.getUserMedia === undefined) {
 
 navigator.mediaDevices.getUserMedia(constraints)
 .then(function(stream) {
-  alert('stream');
   var video = document.querySelector('video');
   alert(video);
   // Older browsers may not have srcObject
