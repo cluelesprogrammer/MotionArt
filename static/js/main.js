@@ -62,6 +62,13 @@ var form = document.getElementById('timer-form')
 
 form.addEventListener("submit", function(e) {
     let timersecs = parseInt(document.getElementById('timer-seconds').value);
+    setTimeout(() => {
+      
+
+
+      }
+    ,timersecs);
+
     let videooverlay = document.getElementById('countdown-text');
     var mins = 0;
     var secs = 0;
