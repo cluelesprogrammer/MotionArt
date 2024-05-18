@@ -13,37 +13,53 @@
                     <div class = "non-logo"> <a href="/">Home</a></div>
                     <div class = "non-logo"> <a href="/feedback">Send Feedback</a></div>
     </nav>
-    <div class="parent">
-        <div class="Camera-preview">
-            <div class="cam-instruction">
-                <p>Set a timer and duration for your dance video!</p>
-            </div>
-            <div class="camera">
-                <div id="preview-with-text">
-                    <video id="preview" muted autoplay playsinline></video>
-                </div>
-                 <div id= "countdown-text">  </div>
-        </div>
-    </div>
- 
-    <form class="timer-form" id="timer-form">
-        <label for="timer-seconds" class="timer-label"><p>Timer</p></label>
-        <input class="num-field" placeholder="in seconds" type="number" id="timer-seconds" name="timersec" value="60" max=600>
-        <p>secs</p>
-        <label for="record-duration" class="timer-label"><p>Duration</p></label>
-        <input class="num-field" type="number" id="record-duration" name="record-secs" value="120" max=600 >
-        <label for="time-unit" class="time-unit">secs</label>
-        <select id="time-unit" name="time-unit">
-            <option value="secs">secs</option>
-            <option value="mins">mins</option>
-        </select>
-        <button id="rec-button"  type="submit"> rec </button>
-    </form>           
+      <h1>Take a quick picture</h1>
+      <video id="video" width="640" height="480" autoplay></video>
+      <canvas id="canvas" width="640" height="480"></canvas>
+      <br>
+      <button id="startButton">Start Camera</button>
+      <button id="snapButton">Take Picture</button>
 
-    <input type="file" id="fileElem" style="display:none" accept="video/*">
-    <div class="div-button" id="upload-video">
-        Alternatively, by clicking here, you can upload a video of you dancing.
-    </div>
-    <script type="text/javascript" src="static/js/main.js"></script>
+      <script>
+          const video = document.getElementById('video');
+          const canvas = document.getElementById('canvas');
+          const startButton = document.getElementById('startButton');
+          const snapButton = document.getElementById('snapButton');
+          const context = canvas.getContext('2d');
+  
+          startButton.addEventListener('click', async () => {
+              try {
+                  const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                  video.srcObject = stream;
+              } catch (err) {
+                  console.error('Error accessing the camera: ', err);
+              }
+          });
+  
+          snapButton.addEventListener('click', () => {
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const dataUrl = canvas.toDataURL('image/png');
+
+            // Send the image data to the backend
+            fetch('http://localhost:5000/upload_image', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ image: dataUrl }),
+            })
+            .then(response => response.blob())
+            .then(blob => {
+                const url = URL.createObjectURL(blob);
+                processedImage.src = url;
+                console.log('Processed image received successfully');
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        });
+        </script>
+              <!-- canvas.style.display = 'block'; -->
+      </script>
 </body>
 </html>
