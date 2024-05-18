@@ -37,27 +37,17 @@
           });
   
           snapButton.addEventListener('click', () => {
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            context.drawImage(video, 0, 0, canvas.width, canvas.height); 
             const dataUrl = canvas.toDataURL('image/png');
-
             // Send the image data to the backend
-            fetch('http://localhost:5000/upload_image', {
+            fetch('http://127.0.0.1:5000/upload_image', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ image: dataUrl }),
-            })
-            .then(response => response.blob())
-            .then(blob => {
-                const url = URL.createObjectURL(blob);
-                processedImage.src = url;
-                console.log('Processed image received successfully');
-            })
-            .catch((error) => {
-                console.error('Error:', error);
+                mode: 'no-cors',
+                body: dataUrl
             });
         });
         </script>
+              <!-- canvas.style.display = 'block'; -->
+      
 </body>
 </html>
