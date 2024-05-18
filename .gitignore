@@ -1,0 +1,11 @@
+# Ignore files ending with .log
+*.log
+
+# Ignore directories named "temp"
+/temp/
+
+# Ignore all files in the "build" directory
+/build/*
+
+# Ignore a specific file
+env
