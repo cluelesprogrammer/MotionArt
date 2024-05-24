@@ -9,45 +9,71 @@
 </head>
 <body>
     <nav class="nav-container">
-                    <div class = "logo"> <a  href="/">MotionArt</a></div>
-                    <div class = "non-logo"> <a href="/">Home</a></div>
-                    <div class = "non-logo"> <a href="/feedback">Send Feedback</a></div>
+        <div class="logo"><a href="/">MotionArt</a></div>
+        <!-- <div class="non-logo"><a href="/">Home</a></div>-->
+        <!--<div class="non-logo"><a href="/feedback">Send Feedback</a></div> -->
     </nav>
-      <h1>Take a quick picture</h1>
-      <video id="video" width="640" height="480" autoplay></video>
-      <canvas id="canvas" width="640" height="480"></canvas>
-      <br>
-      <button id="startButton">Start Camera</button>
-      <button id="snapButton">Take Picture</button>
+    <h1>Do something funny with your body</h1>
+    <video id="video" width="640" height="480" autoplay></video>
+    <canvas id="canvas" width="640" height="480" style="display:none;"></canvas>
+    <canvas id="processedCanvas" width="640" height="480"></canvas>
 
-      <script>
-          const video = document.getElementById('video');
-          const canvas = document.getElementById('canvas');
-          const startButton = document.getElementById('startButton');
-          const snapButton = document.getElementById('snapButton');
-          const context = canvas.getContext('2d');
-  
-          startButton.addEventListener('click', async () => {
-              try {
-                  const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-                  video.srcObject = stream;
-              } catch (err) {
-                  console.error('Error accessing the camera: ', err);
-              }
-          });
-  
-          snapButton.addEventListener('click', () => {
-            context.drawImage(video, 0, 0, canvas.width, canvas.height); 
-            const dataUrl = canvas.toDataURL('image/png');
-            // Send the image data to the backend
-            fetch('http://127.0.0.1:5000/upload_image', {
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const processedCanvas = document.getElementById('processedCanvas');
+        const context = canvas.getContext('2d');
+        const processedContext = processedCanvas.getContext('2d');
+
+        // Function to start the camera
+        async function startCamera() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                video.srcObject = stream;
+            } catch (err) {
+                console.error('Error accessing the camera: ', err);
+            }
+        }
+
+        // Start the camera as soon as the page loads
+        window.addEventListener('load', startCamera);
+
+        // Send frame to backend every 100ms
+        setInterval(() => {
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const dataURL = canvas.toDataURL('image/jpeg');
+
+            fetch('http://127.0.0.1:5000/process_image', {
                 method: 'POST',
-                mode: 'no-cors',
-                body: dataUrl
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ image: dataURL })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Network response was not ok: ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.error) {
+                    throw new Error(`Server error: ${data.error}`);
+                }
+                const image = new Image();
+                image.onload = () => {
+                    processedContext.clearRect(0, 0, processedCanvas.width, processedCanvas.height);
+                    processedContext.drawImage(image, 0, 0, processedCanvas.width, processedCanvas.height);
+                    // Hide the video and show the processed canvas
+                    video.style.display = 'none';
+                    processedCanvas.style.display = 'block';
+                };
+                image.src = data.processed_image;
+            })
+            .catch((error) => {
+                console.error('Error:', error);
             });
-        });
-        </script>
-              <!-- canvas.style.display = 'block'; -->
-      
+        }, 2000);
+    </script>
 </body>
 </html>
