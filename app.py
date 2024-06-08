@@ -12,7 +12,7 @@ from body import Body
 import torch
 import util
 from time import time
-from gunicorn_config import body_estimation
+from load_model import body_estimation
 from flask_socketio import SocketIO, emit
 
 app = Flask(__name__)
