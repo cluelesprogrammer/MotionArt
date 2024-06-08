@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="static/css/main.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     
 </head>
 <body>
@@ -17,6 +17,7 @@
     <video id="video" width="640" height="480" autoplay></video>
     <canvas id="canvas" width="640" height="480" style="display:none;"></canvas>
     <canvas id="processedCanvas" width="640" height="480"></canvas>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
 
     <script>
         const video = document.getElementById('video');
@@ -24,6 +25,7 @@
         const processedCanvas = document.getElementById('processedCanvas');
         const context = canvas.getContext('2d');
         const processedContext = processedCanvas.getContext('2d');
+        const socket = io('http://127.0.0.1:8000');  // Adjust this URL if necessary
 
         // Function to start the camera
         async function startCamera() {
@@ -33,47 +35,43 @@
             } catch (err) {
                 console.error('Error accessing the camera: ', err);
             }
-        }
+        };
 
         // Start the camera as soon as the page loads
         window.addEventListener('load', startCamera);
 
-        // Send frame to backend every 100ms
+        // Send frame to backend every 300ms via WebSocket
+        socket.onopen = function(event) {
+            setInterval(() => {
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const dataURL = canvas.toDataURL('image/jpeg');
+            socket.emit('frame', { image: dataURL });
+        }, 3000);            
+        };
+
+        socket.on('connect_error', (error) => {
+            console.error('Connection error:', error);
+        });
+
+
+
         setInterval(() => {
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
             const dataURL = canvas.toDataURL('image/jpeg');
+            socket.emit('frame', { image: dataURL });
+        }, 3000);
 
-            fetch('http://127.0.0.1:5000/process_image', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ image: dataURL })
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Network response was not ok: ${response.statusText}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.error) {
-                    throw new Error(`Server error: ${data.error}`);
-                }
-                const image = new Image();
-                image.onload = () => {
-                    processedContext.clearRect(0, 0, processedCanvas.width, processedCanvas.height);
-                    processedContext.drawImage(image, 0, 0, processedCanvas.width, processedCanvas.height);
-                    // Hide the video and show the processed canvas
-                    video.style.display = 'none';
-                    processedCanvas.style.display = 'block';
-                };
-                image.src = data.processed_image;
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-        }, 2000);
+        socket.on('processed_frame', (data) => {
+            const image = new Image();
+            image.onload = () => {
+                processedContext.clearRect(0, 0, processedCanvas.width, processedCanvas.height);
+                processedContext.drawImage(image, 0, 0, processedCanvas.width, processedCanvas.height);
+                // Hide the video and show the processed canvas
+                video.style.display = 'none';
+                processedCanvas.style.display = 'block';
+            };
+            image.src = data.processed_image;
+        });
     </script>
 </body>
 </html>

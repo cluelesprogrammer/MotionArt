@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 import base64
 from PIL import Image
 import logging
@@ -11,8 +11,12 @@ from model import bodypose_model
 from body import Body
 import torch
 import util
+from time import time
+from gunicorn_config import body_estimation
+from flask_socketio import SocketIO, emit
 
 app = Flask(__name__)
+socketio = SocketIO(app, cors_allowed_origins="*")
 CORS(app)
 
 # Configure logging
@@ -24,25 +28,34 @@ file_handler.setFormatter(logging.Formatter('%(asctime)s %(levelname)s:%(message
 logger = logging.getLogger(__name__)
 logger.addHandler(file_handler)
 
-# Global variables for the model and inference results
-body_estimation = None
 #latest_result = None
 #inference_interval = 0.3  # 300 milliseconds
 
+@socketio.on('connect')
+def handle_connect():
+    print('Client connected')
+    emit('message', {'data': 'Connected to server'})
+
+@socketio.on('disconnect')
+def handle_disconnect():
+    print('Client disconnected')
+
 @app.route('/')
 def index():
-    return 'Hello, World!'
+    return render_template('index.html')
 
 def load_model():
-    global body_estimation 
+    logger.debug('load model function')
+    global body_estimation
     body_estimation=Body('openpose_models/body_pose_model.pth')
 
-@app.route('/process_image', methods=['POST'])
+@socketio.on('frame')
 def process_image():
     logger.debug('function evoked')
     try:
         #logger.debug(request.content_type)
         #logger.debug(request.data)
+        
         #data = request.data
         data = request.get_json(force=True)  # force=True ensures JSON parsing
         image_data = data['image'].split(',')[1]
@@ -53,23 +66,25 @@ def process_image():
 
         # Decode image
         img = np.array(cv2.imdecode(nparr, cv2.IMREAD_COLOR))
-        logger.debug('before inference')
+        model = body_estimation.model
+
+        since=time()
         candidate, subset = body_estimation(img, logger)
-        logger.debug('body estimation inference worked')
+        post_proc_inf = time() - since
+        logger.debug('post processing inference took: ')
+        logger.debug(post_proc_inf)
 
         canvas = util.draw_bodypose(img, candidate, subset)
+        logger.debug('cavnas size: ')
+        logger.debug(canvas.shape)
         logger.debug('drawing bodypose worked')
 
         # Encode image back to base64
         _, buffer = cv2.imencode('.jpg', canvas)
-        processed_image_data = base64.b64encode(buffer).decode('utf-8')
-        processed_image_url = f"data:image/jpeg;base64,{processed_image_data}"
-
-        return jsonify({'processed_image': processed_image_url})
-    
+        processed_image_str = base64.b64encode(buffer).decode('utf-8')
+        processed_image_data = f"data:image/jpeg;base64,{processed_image_str}"
+        emit('processed_frame', {'processed_image': processed_image_data})
     except Exception as e:
-        logger.debug(type(body_estimation))
-        logger.debug(body_estimation==None)
         return jsonify({'error': str(e)}), 400
 
 """
@@ -104,9 +119,7 @@ def get_inference():
 """
 
 if __name__ == '__main__':
-    load_model()
-    app.run(debug=True)
-  
+    socketio.run(app, host='0.0.0.0', port=8000)
     """
     inference_thread = threading.Thread(target=run_inference)
     inference_thread.daemon = True
