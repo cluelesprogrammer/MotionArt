@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    
+</head>
+<body>
+    <nav class="nav-container">
+        <div class="logo"><a href="/">MotionArt</a></div>
+        <!-- <div class="non-logo"><a href="/">Home</a></div>-->
+        <!--<div class="non-logo"><a href="/feedback">Send Feedback</a></div> -->
+    </nav>
+    <h1>Do something funny with your body</h1>
+    <video id="video" width="640" height="480" autoplay></video>
+    <canvas id="canvas" width="640" height="480" style="display:none;"></canvas>
+    <canvas id="processedCanvas" width="640" height="480"></canvas>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const processedCanvas = document.getElementById('processedCanvas');
+        const context = canvas.getContext('2d');
+        const processedContext = processedCanvas.getContext('2d');
+        const socket = io('http://127.0.0.1:8000');  // Adjust this URL if necessary
+
+        // Function to start the camera
+        async function startCamera() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                video.srcObject = stream;
+            } catch (err) {
+                console.error('Error accessing the camera: ', err);
+            }
+        };
+
+        // Start the camera as soon as the page loads
+        window.addEventListener('load', startCamera);
+
+        // Send frame to backend every 300ms via WebSocket
+        socket.onopen = function(event) {
+            setInterval(() => {
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const dataURL = canvas.toDataURL('image/jpeg');
+            socket.emit('frame', { image: dataURL });
+        }, 3000);            
+        };
+
+        socket.on('connect_error', (error) => {
+            console.error('Connection error:', error);
+        });
+
+
+
+        setInterval(() => {
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const dataURL = canvas.toDataURL('image/jpeg');
+            socket.emit('frame', { image: dataURL });
+        }, 3000);
+
+        socket.on('processed_frame', (data) => {
+            const image = new Image();
+            image.onload = () => {
+                processedContext.clearRect(0, 0, processedCanvas.width, processedCanvas.height);
+                processedContext.drawImage(image, 0, 0, processedCanvas.width, processedCanvas.height);
+                // Hide the video and show the processed canvas
+                video.style.display = 'none';
+                processedCanvas.style.display = 'block';
+            };
+            image.src = data.processed_image;
+        });
+    </script>
+</body>
+</html>
