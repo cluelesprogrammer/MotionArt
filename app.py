@@ -50,41 +50,33 @@ def load_model():
     body_estimation=Body('openpose_models/body_pose_model.pth')
 
 @socketio.on('frame')
-def process_image():
+def process_image(data_image):
     logger.debug('function evoked')
     try:
-        #logger.debug(request.content_type)
-        #logger.debug(request.data)
+        sbuf = io.StringIO()
+        sbuf.write(data_image)
         
-        #data = request.data
-        data = request.get_json(force=True)  # force=True ensures JSON parsing
-        image_data = data['image'].split(',')[1]
-        image_bytes = base64.b64decode(image_data)
-        
-        # Convert byte data to numpy array
-        nparr = np.frombuffer(image_bytes, np.uint8)
+        # Step 1: Decode the base64 string to bytes
+        image_bytes = base64.b64decode(data_image)
 
-        # Decode image
-        img = np.array(cv2.imdecode(nparr, cv2.IMREAD_COLOR))
-        model = body_estimation.model
+        # Step 2: Convert bytes to a BytesIO object
+        image_stream = io.BytesIO(image_bytes)
 
-        since=time()
-        candidate, subset = body_estimation(img, logger)
-        post_proc_inf = time() - since
-        logger.debug('post processing inference took: ')
-        logger.debug(post_proc_inf)
+        # Step 3: Read the BytesIO object into a NumPy array
+        image_array = np.frombuffer(image_stream.getvalue(), dtype=np.uint8)
 
+        # Step 4: Decode the NumPy array to an image using OpenCV
+        img = cv2.imdecode(image_array, cv2.IMREAD_COLOR)
+        candidate, subset = body_estimation(img)
         canvas = util.draw_bodypose(img, candidate, subset)
-        logger.debug('cavnas size: ')
-        logger.debug(canvas.shape)
-        logger.debug('drawing bodypose worked')
-
+        
         # Encode image back to base64
         _, buffer = cv2.imencode('.jpg', canvas)
         processed_image_str = base64.b64encode(buffer).decode('utf-8')
         processed_image_data = f"data:image/jpeg;base64,{processed_image_str}"
         emit('processed_frame', {'processed_image': processed_image_data})
     except Exception as e:
+        logger.debug('some error is occuring')
         return jsonify({'error': str(e)}), 400
 
 """
@@ -119,8 +111,9 @@ def get_inference():
 """
 
 if __name__ == '__main__':
-    socketio.run(app, host='0.0.0.0', port=8000)
+    socketio.run(app, port=8000)
     """
+    , host='0.0.0.0',
     inference_thread = threading.Thread(target=run_inference)
     inference_thread.daemon = True
     inference_thread.start()

@@ -19,22 +19,20 @@ class Body(object):
         self.model.load_state_dict(model_dict)
         self.model.eval()
 
-    def __call__(self, oriImg, logger):
+    def __call__(self, oriImg):
         #scale_search = [0.5, 1.0, 1.5, 2.0]
-        scale_search = [0.5]
-        logger.debug('call function breakpoint 1')
-        try:
-            boxsize = 368
-            stride = 8
-            padValue = 128
-            thre1 = 0.1
-            thre2 = 0.05
-            multiplier = [x * boxsize / oriImg.shape[0] for x in scale_search]
-            heatmap_avg = np.zeros((oriImg.shape[0], oriImg.shape[1], 19))
-            paf_avg = np.zeros((oriImg.shape[0], oriImg.shape[1], 38))
-        except Exception as e:
-            logger.debug('scale search error')
-
+        scale_search = [0.2]
+        
+        boxsize = 368
+        stride = 8
+        padValue = 128
+        thre1 = 0.1
+        thre2 = 0.05
+        multiplier = [x * boxsize / oriImg.shape[0] for x in scale_search]
+       
+        heatmap_avg = np.zeros((oriImg.shape[0], oriImg.shape[1], 19))
+        paf_avg = np.zeros((oriImg.shape[0], oriImg.shape[1], 38))
+    
         for m in range(len(multiplier)):
             scale = multiplier[m]
             imageToTest = cv2.resize(oriImg, (0, 0), fx=scale, fy=scale, interpolation=cv2.INTER_CUBIC)
