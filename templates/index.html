@@ -17,7 +17,7 @@
     <video id="video" width="640" height="480" autoplay></video>
     <canvas id="canvas" width="640" height="480" style="display:none;"></canvas>
     <canvas id="processedCanvas" width="640" height="480"></canvas>
-    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.1/socket.io.js" integrity="sha512-9mpsATI0KClwt+xVZfbcf2lJ8IFBAwsubJ6mI3rtULwyM3fBmQFzj0It4tGqxLOGQwGfJdk/G+fANnxfq9/cew==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script>
         const video = document.getElementById('video');
@@ -26,6 +26,10 @@
         const context = canvas.getContext('2d');
         const processedContext = processedCanvas.getContext('2d');
         const socket = io('http://127.0.0.1:8000');  // Adjust this URL if necessary
+        
+        socket.on('connect', function(){
+            console.log("Connection has been succesfully established with socket.", socket.connected)
+        });
 
         // Function to start the camera
         async function startCamera() {
@@ -39,27 +43,19 @@
 
         // Start the camera as soon as the page loads
         window.addEventListener('load', startCamera);
-
+        
+    
         // Send frame to backend every 300ms via WebSocket
-        socket.onopen = function(event) {
-            setInterval(() => {
+        setInterval(() => {
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
             const dataURL = canvas.toDataURL('image/jpeg');
-            socket.emit('frame', { image: dataURL });
-        }, 3000);            
-        };
+            const frameBase64 = dataURL.split(',')[1];
+            socket.emit('frame', frameBase64);
+        }, 300);            
 
         socket.on('connect_error', (error) => {
             console.error('Connection error:', error);
         });
-
-
-
-        setInterval(() => {
-            context.drawImage(video, 0, 0, canvas.width, canvas.height);
-            const dataURL = canvas.toDataURL('image/jpeg');
-            socket.emit('frame', { image: dataURL });
-        }, 3000);
 
         socket.on('processed_frame', (data) => {
             const image = new Image();
