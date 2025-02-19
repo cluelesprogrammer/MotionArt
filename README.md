@@ -1,4 +1,4 @@
-# [MotionArt]
+# MotionArt
 
 ## Description
 
